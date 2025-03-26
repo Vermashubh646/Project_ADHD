@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Video Feed Processing</title>
+  <style>
+    body { font-family: sans-serif; }
+    video { border: 1px solid #ccc; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Live Video Feed Processing</h1>
+  <button id="startButton">Start Video Feed</button>
+  <video id="video" width="640" height="480" autoplay muted></video>
+  <div id="status"></div>
+
+  <script>
+    const video = document.getElementById('video');
+    const startButton = document.getElementById('startButton');
+    const statusDiv = document.getElementById('status');
+
+    let ws; // Declare the WebSocket variable
+
+    startButton.addEventListener('click', async () => {
+      // Request access to the webcam
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        video.srcObject = stream;
+      } catch (error) {
+        console.error("Error accessing webcam:", error);
+        statusDiv.innerHTML = "Error accessing webcam.";
+        return;
+      }
+
+      // Create the WebSocket connection when the button is clicked
+      ws = new WebSocket("ws://localhost:8000/ws");
+
+      ws.onopen = () => {
+        statusDiv.innerHTML = "WebSocket connection opened.";
+        captureFrame(); // Start capturing frames
+      };
+
+      ws.onmessage = (event) => {
+        console.log("API response:", event.data);
+        statusDiv.innerHTML = "Focus status: " + event.data;
+      };
+
+      ws.onerror = (error) => {
+        console.error("WebSocket error:", error);
+        statusDiv.innerHTML = "WebSocket error occurred.";
+      };
+
+      ws.onclose = () => {
+        console.log("WebSocket connection closed.");
+        statusDiv.innerHTML = "WebSocket connection closed.";
+      };
+    });
+
+    function captureFrame() {
+      if (!ws || ws.readyState !== WebSocket.OPEN) {
+        console.log("WebSocket not ready to send data.");
+        return;
+      }
+      
+      // Create a canvas to capture the current video frame
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Convert the canvas to a JPEG image (data URL format)
+      const imageData = canvas.toDataURL('image/jpeg');
+
+      // Send the captured frame to the server via WebSocket
+      ws.send(imageData);
+
+      // Capture and send the next frame after a delay (0.02 second)
+      setTimeout(captureFrame, 33);
+    }
+  </script>
+</body>
+</html>
