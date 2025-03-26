@@ -1,0 +1,21 @@
+.assistant-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: rgba(30, 41, 57, 0.8);
+    backdrop-filter: blur(12px);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .assistant-icon:hover {
+    transform: scale(1.1);
+  }
+  

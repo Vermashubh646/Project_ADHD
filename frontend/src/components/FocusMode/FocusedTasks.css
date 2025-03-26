@@ -1,0 +1,152 @@
+/* ============================
+   ✅ Focused Task Container
+=============================== */
+.ms-focused-tasks-container {
+  flex-grow: 1;
+  background: rgba(20, 30, 45, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3),
+    inset 0 2px 6px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-left: 1.5rem; /* 🔥 Adds margin between CameraPreview and FocusedTasks */
+}
+
+/* ============================
+   📚 Header Styling
+=============================== */
+.ms-task-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #9ca3af;
+  margin-bottom: 0.8rem;
+}
+
+/* ============================
+   📋 Task List Styling
+=============================== */
+.ms-task-list {
+  max-height: 240px;
+  overflow-y: auto;
+  padding-right: 0.4rem;
+}
+
+/* ============================
+   🔥 Task Item Styles
+=============================== */
+.ms-task-item {
+  background: rgba(35, 45, 60, 0.7);
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover Effect */
+.ms-task-item:hover {
+  background: rgba(45, 55, 70, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Empty Task State */
+.ms-no-task {
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 1rem 0;
+  color: #9ca3af;
+}
+
+/* ============================
+   📝 Task Title Styles
+=============================== */
+.ms-task-title {
+  color: #d1d5db;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ============================
+   🎮 Task Button Group
+=============================== */
+.ms-btn-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Task Buttons */
+.ms-task-btn {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background: rgba(25, 35, 50, 0.9);
+}
+
+/* Focus Button - Blue */
+.ms-btn-focus {
+  color: #60a5fa;
+  background: rgba(30, 41, 57, 0.85);
+}
+
+.ms-btn-focus:hover {
+  color: #93c5fd;
+  background: rgba(40, 55, 75, 0.9);
+  transform: translateY(-1px);
+}
+
+/* Complete Button - Green */
+.ms-btn-complete {
+  color: #34d399;
+  background: rgba(30, 41, 57, 0.85);
+}
+
+.ms-btn-complete:hover {
+  color: #6ee7b7;
+  background: rgba(40, 55, 75, 0.9);
+  transform: translateY(-1px);
+}
+
+/* ============================
+   🎚️ Scrollbar Styling
+=============================== */
+.ms-task-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ms-task-list::-webkit-scrollbar-thumb {
+  background: rgba(50, 65, 90, 0.8);
+  border-radius: 8px;
+}
+
+.ms-task-list::-webkit-scrollbar-track {
+  background: rgba(25, 35, 50, 0.6);
+}
+
+/* ============================
+   📱 Responsive Design
+=============================== */
+@media (max-width: 768px) {
+  .ms-focused-tasks-container {
+    width: 100%;
+    padding: 1rem;
+    margin-left: 0;
+  }
+
+  .ms-task-list {
+    max-height: 200px;
+  }
+
+  .ms-task-btn {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+  }
+}

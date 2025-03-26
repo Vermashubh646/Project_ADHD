@@ -1,0 +1,104 @@
+/* Camera Container - Compact and Balanced */
+.camera-container {
+    width: 100%;
+    max-width: 240px; /* Reduced further */
+    background: rgba(25, 35, 50, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  /* Header - Smaller Title */
+  .camera-header {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e5e7eb;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Webcam Container - Smaller with Aspect Ratio */
+  .webcam-container {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2), 0 3px 8px rgba(80, 120, 180, 0.15);
+    background: rgba(40, 60, 85, 0.5);
+  }
+  
+  /* Placeholder - Compact Size */
+  .camera-placeholder {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    background: rgba(30, 45, 65, 0.5);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  /* Button Styles - Compact and Clean */
+  .camera-btn {
+    margin-top: 0.6rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  /* Start Camera Button - Compact Green */
+  .btn-start {
+    background: rgba(34, 197, 94, 0.75); /* Green */
+    color: #f8f9fa;
+    box-shadow: 0 2px 6px rgba(34, 197, 94, 0.15);
+  }
+  
+  .btn-start:hover {
+    background: rgba(34, 197, 94, 0.9);
+    transform: translateY(-1px);
+  }
+  
+  /* Stop Camera Button - Compact Red */
+  .btn-stop {
+    background: rgba(239, 68, 68, 0.75); /* Red */
+    color: #f8f9fa;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.15);
+  }
+  
+  .btn-stop:hover {
+    background: rgba(239, 68, 68, 0.9);
+    transform: translateY(-1px);
+  }
+  
+  /* Hover Effect for Compact Container */
+  .camera-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 2px 6px rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .camera-container {
+      padding: 0.8rem;
+      max-width: 200px; /* Reduced for mobile */
+    }
+    .camera-header {
+      font-size: 0.9rem;
+    }
+    .camera-btn {
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+    }
+  }
+  

@@ -1,0 +1,11 @@
+# Ignore Node Modules from Root, Frontend, and Backend
+**/node_modules
+
+# Ignore Environment Files from Frontend and Backend
+**/.env
+
+# Ignore Build Files from Vite (Frontend)
+frontend/dist
+
+# Ignore Debug Logs
+*.log
