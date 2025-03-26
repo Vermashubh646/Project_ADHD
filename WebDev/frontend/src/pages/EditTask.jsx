@@ -34,7 +34,7 @@ function EditTask() {
           return;
         }
 
-        const res = await axios.get(`http://localhost:5000/api/tasks/${taskId}`, {
+        const res = await axios.get(`https://mindsync-backend.up.railway.app/api/tasks/${taskId}`, {
           headers: {
             Authorization: `Bearer ${token}`, // Pass the token here
             "Content-Type": "application/json",
@@ -76,7 +76,7 @@ function EditTask() {
         return;
       }
 
-      const res = await axios.put(`http://localhost:5000/api/tasks/${taskId}`, formData, {
+      const res = await axios.put(`https://mindsync-backend.up.railway.app/api/tasks/${taskId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`, // Include token in header
           "Content-Type": "application/json",

@@ -20,16 +20,13 @@ function TaskForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-
     try {
       const token = await getToken(); // Get the JWT token from Clerk
       if (!token) {
         console.error("No token found, user may not be authenticated.");
         return;
       }
-
-      await fetch("http://localhost:5000/api/tasks", {
+      await fetch("https://mindsync-backend.up.railway.app/api/tasks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

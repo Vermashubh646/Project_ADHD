@@ -22,7 +22,7 @@ function Tasks() {
           return;
         }
 
-        const res = await fetch("http://localhost:5000/api/tasks", {
+        const res = await fetch("https://mindsync-backend.up.railway.app/api/tasks", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`, // Include token in header
@@ -98,7 +98,7 @@ function Tasks() {
 
     try {
       const token = await getToken(); // Get token for reordering
-      const response = await fetch("http://localhost:5000/api/tasks/reorder", {
+      const response = await fetch("https://mindsync-backend.up.railway.app/api/tasks/reorder", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -132,7 +132,7 @@ function Tasks() {
   
     try {
       const token = await getToken();
-      const response = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
+      const response = await fetch(`https://mindsync-backend.up.railway.app/api/tasks/${taskId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -153,7 +153,7 @@ function Tasks() {
   const handleMarkComplete = async (taskId) => {
     try {
       const token = await getToken();
-      const response = await fetch(`http://localhost:5000/api/tasks/${taskId}/complete`, {
+      const response = await fetch(`https://mindsync-backend.up.railway.app/api/tasks/${taskId}/complete`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

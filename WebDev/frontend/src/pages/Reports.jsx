@@ -23,7 +23,7 @@ const Reports = () => {
           return;
         }
   
-        const res = await fetch("http://localhost:5000/api/sessions/all", {
+        const res = await fetch("https://mindsync-backend.up.railway.app/api/sessions/all", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`, // ✅ Add token to headers
