@@ -5,6 +5,7 @@ const cors = require("cors");
 const geminiRoutes = require("./routes/geminiRoutes");
 const { ClerkExpressWithAuth } = require("@clerk/clerk-sdk-node");
 const authMiddleware = require("./middleware/authMiddleware");
+const Task = require("./models/Task");
 
 
 
