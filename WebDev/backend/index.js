@@ -35,7 +35,7 @@ app.use("/api/tasks", authMiddleware, require("./routes/taskRoutes"));
 app.use("/api/sessions", authMiddleware, require("./routes/sessionRoutes"));
 app.use(geminiRoutes);
 
-app.get("/", async (req, res) => {
+app.get("/checkTasks", async (req, res) => {
   try {
     //res.json(req.auth.userId);
     const tasks = await Task.find().sort({ position: 1 }); 
