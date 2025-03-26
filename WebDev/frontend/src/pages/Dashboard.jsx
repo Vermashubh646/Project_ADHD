@@ -25,7 +25,7 @@ const Dashboard = ({ tasks }) => {
           return;
         }
 
-        const res = await fetch("http://localhost:5000/api/sessions/all", {
+        const res = await fetch("https://mindsync-backend.up.railway.app/api/sessions/all", {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`, // ✅ Pass token in headers
@@ -33,11 +33,14 @@ const Dashboard = ({ tasks }) => {
           },
         });
 
+        console.log("Response Status:", res.status);
+
         if (!res.ok) {
           throw new Error("Failed to fetch sessions");
         }
 
         const data = await res.json();
+        console.log(data);
         setSessions(data); // ✅ Store fetched session data
       } catch (err) {
         console.error("Error fetching sessions:", err.message);

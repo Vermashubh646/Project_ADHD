@@ -9,6 +9,7 @@ router.use(authMiddleware);
 
 router.get("/all", async (req, res) => {
   try {
+    console.log("User ID from Auth:", req.auth.userId);
     const sessions = await Session.find({userId: req.auth.userId}).sort({ createdAt: -1 }); // Latest sessions first
     res.json(sessions);
   } catch (err) {
@@ -20,9 +21,9 @@ router.get("/all", async (req, res) => {
 // ✅ Start a Session
 router.post("/start", async (req, res) => {
   try {
-    const { userId } = req.body; // Will be "testUser" for now
+    const userId = req.auth.userId; // Extract userId from authMiddleware
     const session = new Session({
-      userId: userId || "testUser",
+      userId: userId,
       startTime: new Date(),
       totalFocusDuration: 0, // Starts at 0, updated when session ends
     });

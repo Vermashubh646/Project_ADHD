@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/tasks";
+const API_URL = "https://mindsync-backend.up.railway.app/api/tasks";
 
 // Fetch all tasks
 export const getTasks = async (token) => {

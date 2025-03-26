@@ -291,7 +291,7 @@ useEffect(() => {
       try {
         const token = await getToken();
         await axios.put(
-          `http://localhost:5000/api/tasks/${focusedTask._id}/update-distractions`,
+          `https://mindsync-backend.up.railway.app/api/tasks/${focusedTask._id}/update-distractions`,
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -306,7 +306,7 @@ useEffect(() => {
     try {
       const token = await getToken();
       await axios.put(
-        `http://localhost:5000/api/tasks/${task._id}/inProgress`,
+        `https://mindsync-backend.up.railway.app/api/tasks/${task._id}/inProgress`,
         { status: "In Progress" },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -325,7 +325,7 @@ useEffect(() => {
     try {
       const token = await getToken();
       const res = await axios.post(
-        "http://localhost:5000/api/sessions/start",
+        "https://mindsync-backend.up.railway.app/api/sessions/start",
         { userId: `${token}` }, // Later replace "testUser" with the actual user ID
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -384,7 +384,7 @@ useEffect(() => {
     try {
       const token = await getToken();
       await axios.put(
-        `http://localhost:5000/api/tasks/${focusedTask._id}/update-time-spent`,
+        `https://mindsync-backend.up.railway.app/api/tasks/${focusedTask._id}/update-time-spent`,
         { timeSpent: taskFocusTime },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -434,13 +434,13 @@ useEffect(() => {
     try {
       const token = await getToken();
       await axios.put(
-        "http://localhost:5000/api/tasks/reset",
+        "https://mindsync-backend.up.railway.app/api/tasks/reset",
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       await axios.post(
-        `http://localhost:5000/api/sessions/end/${storedSessionId}`,
+        `https://mindsync-backend.up.railway.app/api/sessions/end/${storedSessionId}`,
         {
           distractions: distractions.length,
           tasksCompleted: completedTaskTitles.length,
@@ -550,7 +550,7 @@ useEffect(() => {
     try {
       const token = await getToken();
       await axios.put(
-        `http://localhost:5000/api/tasks/${taskId}/complete`,
+        `https://mindsync-backend.up.railway.app/api/tasks/${taskId}/complete`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
