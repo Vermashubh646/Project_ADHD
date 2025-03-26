@@ -35,6 +35,18 @@ app.use("/api/tasks", authMiddleware, require("./routes/taskRoutes"));
 app.use("/api/sessions", authMiddleware, require("./routes/sessionRoutes"));
 app.use(geminiRoutes);
 
+app.get("/", async (req, res) => {
+  try {
+    //res.json(req.auth.userId);
+    const tasks = await Task.find().sort({ position: 1 }); 
+    res.json(tasks);
+    //console.log(req.auth.userId);
+  } catch (error) {
+   // console.error("Error fetching tasks:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 app.get("/api/test-auth", authMiddleware, (req, res) => {
   console.log("Auth Object:", req.auth);
   res.json({ auth: req.auth });
