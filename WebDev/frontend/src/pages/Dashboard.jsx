@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import WeeklyPerformanceChart from "../components/Reports/WeeklyPerformance";
 import StreakTracker from "../components/Reports/StreakTracker";
 import KeyMetrics from "../components/Reports/KeyMetrics";
@@ -24,29 +25,31 @@ const Dashboard = ({ tasks }) => {
           console.error("No token found. User may not be authenticated.");
           return;
         }
-
-        const res = await fetch("https://mindsync-backend.up.railway.app/api/sessions/all", {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${token}`, // ✅ Pass token in headers
-            "Content-Type": "application/json",
-          },
-        });
-
+  
+        // ✅ Axios GET request with headers
+        const res = await axios.get(
+          "https://mindsync-backend.up.railway.app/api/sessions/all",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // ✅ Pass token in headers
+            },
+          }
+        );
+  
         console.log("Response Status:", res.status);
-
-        if (!res.ok) {
+  
+        // ✅ Check if response is successful
+        if (res.status !== 200) {
           throw new Error("Failed to fetch sessions");
         }
-
-        const data = await res.json();
+        const data = res.data; // Axios auto-parses JSON
         console.log(data);
         setSessions(data); // ✅ Store fetched session data
       } catch (err) {
         console.error("Error fetching sessions:", err.message);
       }
     };
-
+  
     fetchSessions(); // 🔥 Call the function inside useEffect
   }, [getToken]);
 

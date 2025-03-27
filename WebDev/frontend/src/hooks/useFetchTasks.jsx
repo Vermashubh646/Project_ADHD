@@ -17,7 +17,7 @@ const useFetchTasks = () => {
         }
 
         // Fetch the tasks from the backend
-        const response = await fetch("http://localhost:5000/api/tasks", {
+        const response = await fetch("https://mindsync-backend.up.railway.app/api/tasks", {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`, // Pass the token in the Authorization header

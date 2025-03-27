@@ -63,7 +63,7 @@ const saveToSession = (newMessages) => {
     setIsTyping(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/gemini", { userMessage: input });
+      const res = await axios.post("https://mindsync-backend.up.railway.app/api/gemini", { userMessage: input });
       const rawResponse =
         res.data.candidates[0]?.content?.parts[0]?.text || "I'm here to help! 😊";
 

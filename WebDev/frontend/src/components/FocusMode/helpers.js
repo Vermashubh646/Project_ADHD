@@ -5,7 +5,7 @@ const getFromLocalStorage = (key, defaultValue) => JSON.parse(localStorage.getIt
 
 const fetchTasks = async (setTasks, setQueuedTasks) => {
     try {
-        const res = await fetch("http://localhost:5000/api/tasks");
+        const res = await fetch("https://mindsync-backend.up.railway.app/api/tasks");
         const data = await res.json();
         setTasks(data);
         const inProgressTasks = data.filter((task) => task.status === "In Progress");
@@ -68,7 +68,7 @@ const handleDistraction = async (
     if (focusedTask) {
         try {
             await axios.put(
-                `http://localhost:5000/api/tasks/${focusedTask._id}/update-distractions`
+                `https://mindsync-backend.up.railway.app/api/tasks/${focusedTask._id}/update-distractions`
             );
         } catch (error) {
             console.error("Error updating distraction count:", error);
@@ -82,7 +82,7 @@ const enqueueTask = (task, setQueuedTasks, setTasks) => {
 };
 
 const setInProgressTask = (task) => {
-    fetch(`http://localhost:5000/api/tasks/${task._id}/inProgress`, {
+    fetch(`https://mindsync-backend.up.railway.app/api/tasks/${task._id}/inProgress`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: "In Progress" }),
@@ -111,7 +111,7 @@ const startFocusMode = async (
         return;
     }
     try {
-        const res = await axios.post("http://localhost:5000/api/sessions/start", {
+        const res = await axios.post("https://mindsync-backend.up.railway.app/api/sessions/start", {
             userId: "testUser",
         });
         setSessionId(res.data.sessionId);
@@ -177,7 +177,7 @@ const stopTrackingCurrentTask = async (
     clearInterval(taskFocusInterval);
     if (!focusedTask || taskFocusTime === 0) return;
     try {
-        await axios.put(`http://localhost:5000/api/tasks/${focusedTask._id}/update-time-spent`, {
+        await axios.put(`https://mindsync-backend.up.railway.app/api/tasks/${focusedTask._id}/update-time-spent`, {
             timeSpent: taskFocusTime,
         });
     } catch (error) {
@@ -256,8 +256,8 @@ const resetTimer = async (
     if (!storedSessionId) return;
 
     try {
-        await axios.put(`http://localhost:5000/api/tasks/reset`);
-        await axios.post(`http://localhost:5000/api/sessions/end/${sessionId}`, {
+        await axios.put(`https://mindsync-backend.up.railway.app/api/tasks/reset`);
+        await axios.post(`https://mindsync-backend.up.railway.app/api/sessions/end/${sessionId}`, {
             distractions: distractions.length,
             tasksCompleted: completedTaskTitles.length,
             taskTitles,
@@ -285,7 +285,7 @@ const resetTimer = async (
     localStorage.clear();
 
     try {
-        await fetch("http://localhost:5000/api/tasks/reset", {
+        await fetch("https://mindsync-backend.up.railway.app/api/tasks/reset", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
         });
@@ -391,7 +391,7 @@ const completeTask = async (
     setCompletedTaskTitles((prev) => [...prev, taskTitle]);
 
     try {
-        await axios.put(`http://localhost:5000/api/tasks/${taskId}/complete`);
+        await axios.put(`https://mindsync-backend.up.railway.app/api/tasks/${taskId}/complete`);
     } catch (error) {
         console.error("Error marking task as complete:", error);
     }

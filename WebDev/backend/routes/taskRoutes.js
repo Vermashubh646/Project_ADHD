@@ -13,6 +13,7 @@ router.get("/", async (req, res) => {
     //res.json(req.auth.userId);
     const tasks = await Task.find({ userId: req.auth.userId}).sort({ position: 1 }); 
     res.json(tasks);
+    console.log(tasks);
     //console.log(req.auth.userId);
   } catch (error) {
    // console.error("Error fetching tasks:", error);

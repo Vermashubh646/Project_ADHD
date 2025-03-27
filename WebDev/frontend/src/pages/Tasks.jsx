@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import { useAuth } from "@clerk/clerk-react"; 
+import { useAuth } from "@clerk/clerk-react";
+ 
 
 function Tasks() {
   const { getToken } = useAuth(); 
@@ -21,7 +22,6 @@ function Tasks() {
           console.error("No token found, user may not be authenticated.");
           return;
         }
-
         const res = await fetch("https://mindsync-backend.up.railway.app/api/tasks", {
           method: "GET",
           headers: {
