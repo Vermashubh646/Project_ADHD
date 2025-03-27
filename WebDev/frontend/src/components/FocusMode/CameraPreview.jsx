@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import Webcam from "react-webcam";
 import { TaskContext } from "../../context/TaskContext";
+import WebSocketManager from "../../utils/WebSocketManager";
 import "./CameraPreview.css";
 
 function CameraPreview() {
@@ -10,72 +11,145 @@ function CameraPreview() {
     handleDistraction,
     triggerReminder,
     focusedTask,
-  } = useContext(TaskContext); // ✅ Use context
+  } = useContext(TaskContext);
 
   const [isCameraOn, setIsCameraOn] = useState(false);
+  const [focusStatus, setFocusStatus] = useState("");
+  const [distractionCheckTimer, setDistractionCheckTimer] = useState(null); // Grace period tracker
+  const [reminderCount, setReminderCount] = useState(0); // Reminder intensity tracker
+  const [gracePeriodDistractions, setGracePeriodDistractions] = useState([]); // Distractions within 20s
   const webcamRef = useRef(null);
+  const captureIntervalRef = useRef(null);
 
-  // 📸 Simulate Distraction Detection
-  const detectDistraction = () => {
-    if (!isCameraOn) return;
+  // 📡 Initialize WebSocketManager with WebSocket URL and onMessage handler
+  const wsManager = useRef(
+    new WebSocketManager("ws://35.244.15.112:8000/ws", (status) => {
+      setFocusStatus(status);
+      console.log("Received status:", status);
 
-    // 🔥 Simulate 30% chance of distraction
-    const isDistracted = Math.random() < 0.3;
+      if (status === "Not Focused") {
+        handleDistractionLogic();
+      }
+    })
+  ).current;
 
-    if (isDistracted) {
-      const distractionData = {
-        timestamp: new Date().toISOString(),
-        status: "Distracted",
-      };
+  // --- 📸 Start capturing and sending frames ---
+  const startCapturing = () => {
+    wsManager.connect(); // ✅ Connect WebSocket
+    captureIntervalRef.current = setInterval(() => {
+      if (webcamRef.current) {
+        const screenshot = webcamRef.current.getScreenshot();
+        if (screenshot) {
+          wsManager.send(screenshot); // 🔥 Send frame
+        }
+      }
+    }, 200); // ✅ 5 FPS (200ms)
+  };
 
-      // ✅ Correct Usage: Pass only `focusedTask`
-      handleDistraction(focusedTask);
+  // --- ⏹️ Stop capturing and close connection ---
+  const stopCapturing = () => {
+    if (captureIntervalRef.current) {
+      clearInterval(captureIntervalRef.current);
+      captureIntervalRef.current = null;
+    }
+    wsManager.disconnect(); // ❌ Close WebSocket connection
+    setFocusStatus("");
+    resetDistractionState(); // Reset distraction tracking
+  };
 
-      // ✅ Trigger a reminder after distraction
-      triggerReminder(
-        `Distraction detected! Refocus on "${focusedTask?.title || "your task"}".`,
-        "rgb(208, 135, 0)"
-      );
+  // --- 🚦 Handle Distraction Logic ---
+  const handleDistractionLogic = () => {
+    const distractionData = {
+      timestamp: new Date().toISOString(),
+      status: "Not Focused",
+    };
 
-      // ✅ Update distraction state
-      const updatedDistractions = [...distractions, distractionData];
-      setDistractions(updatedDistractions);
-      localStorage.setItem("distractions", JSON.stringify(updatedDistractions));
+    // Add to distractions list
+    setDistractions((prev) => {
+      const updated = [...prev, distractionData];
+      localStorage.setItem("distractions", JSON.stringify(updated));
+      return updated;
+    });
+
+    // Check if grace period has started
+    if (!distractionCheckTimer) {
+      // ⏳ Start grace period
+      setDistractionCheckTimer(new Date().getTime());
+      setGracePeriodDistractions([distractionData]);
+
+      // ⏰ After 20s, check distraction count
+      setTimeout(checkDistractionCount, 20000);
+    } else {
+      // Add to grace period list
+      setGracePeriodDistractions((prev) => [...prev, distractionData]);
     }
   };
 
-  // 🕒 Periodically Check for Distractions
-  useEffect(() => {
-    let interval;
-    if (isCameraOn) {
-      interval = setInterval(detectDistraction, 10000); // Check every 10s
-    }
-    return () => clearInterval(interval);
-  }, [isCameraOn, distractions]);
+  // --- ⏰ Check Distraction Count After Grace Period ---
+  const checkDistractionCount = () => {
+    const now = new Date().getTime();
+    const recentDistractions = gracePeriodDistractions.filter(
+      (d) => now - new Date(d.timestamp).getTime() <= 20000
+    );
 
-  // ⏳ Reduce Warning Level If No New Distractions for 1 Minute
-  useEffect(() => {
-    let resetTimeout;
-    if (distractions.length > 0) {
-      resetTimeout = setTimeout(() => {
-        const reducedDistractions = distractions.slice(0, -1);
-        setDistractions(reducedDistractions);
-        localStorage.setItem("distractions", JSON.stringify(reducedDistractions));
-      }, 60000); // Reset after 1 minute
+    // ✅ If distractions exceed threshold (5), trigger reminder
+    if (recentDistractions.length >= 5) {
+      triggerProgressiveReminder(); // Trigger based on reminder count
     }
-    return () => clearTimeout(resetTimeout);
-  }, [distractions]);
+
+    // Reset distraction check
+    resetDistractionState();
+  };
+
+  // --- 🔁 Reset Distraction State ---
+  const resetDistractionState = () => {
+    setDistractionCheckTimer(null);
+    setGracePeriodDistractions([]);
+  };
+
+  // --- 🔔 Trigger Progressive Reminders ---
+  const triggerProgressiveReminder = () => {
+    const reminderMessages = [
+      "You're getting distracted often. Try to refocus! ⏳",
+      "Too many distractions! Consider taking a break. 🛑",
+      "It's time for a break! Recharge and come back stronger. 🚀",
+    ];
+
+    const message =
+      reminderCount < reminderMessages.length
+        ? reminderMessages[reminderCount]
+        : reminderMessages[reminderMessages.length - 1];
+
+    triggerReminder(message);
+    setReminderCount((prev) => prev + 1); // Increase reminder count
+  };
+
+  // --- 🎥 Toggle Camera ---
+  const toggleCamera = () => {
+    setIsCameraOn((prev) => {
+      const newState = !prev;
+      if (newState) {
+        startCapturing();
+      } else {
+        stopCapturing();
+      }
+      return newState;
+    });
+  };
 
   return (
     <div className="camera-container">
       <h3 className="camera-header">📷 Camera Preview</h3>
-
-      {/* Camera Preview or Placeholder */}
-      <div className={`webcam-container ${isCameraOn ? "" : "camera-placeholder"}`}>
+      <div
+        className={`webcam-container ${isCameraOn ? "" : "camera-placeholder"} ${
+          focusStatus === "Focused" ? "focused" : focusStatus === "Not Focused" ? "not-focused" : ""
+        }`}
+      >
         {isCameraOn ? (
           <Webcam
             ref={webcamRef}
             mirrored={true}
+            screenshotFormat="image/jpeg"
             className="w-full h-full rounded-md"
           />
         ) : (
@@ -83,13 +157,18 @@ function CameraPreview() {
         )}
       </div>
 
-      {/* Toggle Button */}
-      <button
-        onClick={() => setIsCameraOn((prev) => !prev)}
-        className={`camera-btn ${isCameraOn ? "btn-stop" : "btn-start"}`}
-      >
-        {isCameraOn ? "Stop Camera" : "Start Camera"}
-      </button>
+      <p>Focus Status: {focusStatus}</p>
+
+      <div className="flex justify-center">
+        <button
+          onClick={toggleCamera}
+          className={`camera-btn ${
+            isCameraOn ? "bg-red-500 hover:bg-red-700" : "bg-green-500 hover:bg-green-700"
+          } text-white font-bold py-2 px-4 rounded`}
+        >
+          {isCameraOn ? "Stop Camera" : "Start Camera"}
+        </button>
+      </div>
     </div>
   );
 }
