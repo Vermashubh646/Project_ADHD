@@ -35,7 +35,7 @@ function Layout() {
           <Route path="/reports" element={<PrivateRoute><Reports /></PrivateRoute>} />
 
           {/* Catch-all for undefined routes */}
-          {/* <Route path="*" element={<Navigate to="/" />} /> */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
     </TaskProvider>
