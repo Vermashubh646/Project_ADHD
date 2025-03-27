@@ -23,7 +23,7 @@ function CameraPreview() {
 
   // 📡 Initialize WebSocketManager with WebSocket URL and onMessage handler
   const wsManager = useRef(
-    new WebSocketManager("ws://35.244.15.112:8000/ws", (status) => {
+    new WebSocketManager("wss://35.244.15.112:8000/ws", (status) => {
       setFocusStatus(status);
       console.log("Received status:", status);
 
