@@ -7,7 +7,7 @@ export default defineConfig({
     tailwindcss(), // ✅ Ensure Tailwind is configured correctly
     react(),
   ],
-  base: "/", // ✅ Correct base path for Vercel deployment
+  base: "./", // ✅ Correct base path for Vercel deployment
   build: {
     outDir: "dist", // ✅ Ensure Vercel uses 'dist' for output
     emptyOutDir: true, // Clears previous build before deploying
