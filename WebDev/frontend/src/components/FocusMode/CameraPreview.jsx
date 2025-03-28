@@ -26,7 +26,22 @@ function CameraPreview() {
   const lastReminderTimeRef = useRef(0); // ⏳ Holds last reminder time
   const lastReminderTypeRef = useRef(""); // 🚨 Holds last reminder type
 
-
+  // --- Initialize WebSocket Connection ---
+  const initializeWebSocket = async () => {
+    try {
+      const response = await fetch("https://35.244.15.112:8000/", {
+        method: "GET",
+      });
+      if (response.ok) {
+        console.log("✅ HTTPS handshake completed, certificate accepted.");
+        wsManager.connect(); // <-- call connect() directly
+      } else {
+        console.error("❌ Initial HTTPS request failed. Unable to establish WebSocket.");
+      }
+    } catch (error) {
+      console.error("❌ Error establishing initial HTTPS connection:", error);
+    }
+  };
   // 📡 Initialize WebSocketManager once and pass onMessage callback and also passed the WS url
   const wsManager = useRef(
     new WebSocketManager(import.meta.env.VITE_WS_URL, (status) => {
@@ -55,8 +70,8 @@ function CameraPreview() {
   ).current;
 
   // --- Start capturing and sending frames ---
-  const startCapturing = () => {
-    wsManager.connect(); // ✅ Connect WebSocket
+  const startCapturing = async () => {
+    await initializeWebSocket(); // Ensure initial HTTPS handshake
     captureIntervalRef.current = setInterval(() => {
       if (webcamRef.current) {
         const screenshot = webcamRef.current.getScreenshot();
