@@ -10,6 +10,15 @@ function FocusedTasks() {
     handleFocusOnTask,
   } = useContext(TaskContext); // ✅ Using TaskContext
 
+  const playTaskCompleteSound = () => {
+    const audio = document.getElementById("taskCompleteSound");
+    if (audio) {
+      audio.play().catch((err) =>
+        console.error("Audio playback error:", err)
+      );
+    }
+  };
+
   return (
     <div className="ms-focused-tasks-container">
       {/* Header */}
@@ -40,7 +49,7 @@ function FocusedTasks() {
 
                 {/* Complete Button */}
                 <button
-                  onClick={() => completeTask(task._id, task.title)}
+                  onClick={() => completeTask(task._id, task.title, playTaskCompleteSound)}
                   className="ms-task-btn ms-btn-complete"
                 >
                   ✅ Complete
@@ -50,6 +59,7 @@ function FocusedTasks() {
           ))
         )}
       </ul>
+      <audio id="taskCompleteSound" src="/audio/complete.mp3" preload="auto"></audio>
     </div>
   );
 }

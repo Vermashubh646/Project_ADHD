@@ -56,6 +56,8 @@ export const TaskProvider = ({ children }) => {
   const [isReminderShowing, setIsReminderShowing] = useState(false); // Prevent overlap
   const [justCompletedTask, setJustCompletedTask] = useState(null);
   const [shownTaskIds, setShownTaskIds] = useState(new Set());
+  const [lastReminderType, setLastReminderType] = useState(null); // ✅ Track last reminder
+
   // 🔹 Gemini Assistant State
   const [isChatOpen, setIsChatOpen] = useState(false);
   const toggleChat = () => setIsChatOpen((prev) => !prev);
@@ -245,9 +247,15 @@ useEffect(() => {
     color = "rgb(208, 135, 0)",
     taskId = null
   ) => {
-    if (!isRunning && message !== "You haven't focused on any task for a while. Pick one now! ⏳") {
+    if (message === lastReminderType) {
+      console.log("Duplicate reminder skipped.");
       return;
     }
+    
+    if (message === "You haven't focused on any task for a while. Pick one now! ⏳" && !isRunning) {
+      return;
+    }
+    
     
     const now = new Date();
 
@@ -263,6 +271,7 @@ useEffect(() => {
 
     setTimeout(() => {
       setShowReminder(false);
+      setLastReminderType(null);
     }, 5000);
   };
 
@@ -276,13 +285,13 @@ useEffect(() => {
       );
       updatedTimestamps.push(now);
 
-      if (updatedTimestamps.length === 3) {
-        triggerReminder("You're getting distracted often. Try to refocus! ⏳");
-      } else if (updatedTimestamps.length >= 5) {
-        triggerReminder("Too many distractions! Do you need a break? 🛑");
-      } else {
-        triggerReminder("Stay on track! Keep focusing. 🚀");
-      }
+      // if (updatedTimestamps.length === 3) {
+      //   triggerReminder("You're getting distracted often. Try to refocus! ⏳");
+      // } else if (updatedTimestamps.length >= 5) {
+      //   triggerReminder("Too many distractions! Do you need a break? 🛑");
+      // } else {
+      //   triggerReminder("Stay on track! Keep focusing. 🚀");
+      // }
 
       return updatedTimestamps;
     });
@@ -536,7 +545,7 @@ useEffect(() => {
   };
 
   // ✅ Complete Task
-  const completeTask = async (taskId, taskTitle) => {
+  const completeTask = async (taskId, taskTitle, playTaskCompleteSound) => {
     stopTrackingCurrentTask();
     setQueuedTasks((prev) => prev.filter((task) => task._id !== taskId));
     setTasksCompleted((prev) => prev + 1);
@@ -558,11 +567,24 @@ useEffect(() => {
       console.error("Error marking task as complete:", error);
     }
 
+    playTaskCompleteSound();
+
     setJustCompletedTask(taskTitle);
     if (focusedTask?._id === taskId) {
       setFocusedTask(null);
     }
   };
+
+//   // --- 🔊 Play Task Completion Sound ---
+// const playTaskCompleteSound = () => {
+//   const audio = document.getElementById("taskCompleteSound");
+//   if (audio) {
+//     audio.play().catch((err) =>
+//       console.error("Audio playback error:", err)
+//     );
+//   }
+// };
+
 
   // 🔹 Context Value
   const contextValue = {
@@ -616,6 +638,8 @@ useEffect(() => {
     setJustCompletedTask,
     shownTaskIds,
     setShownTaskIds,
+    lastReminderType,
+    setLastReminderType,
     isChatOpen,
     setIsChatOpen,
     toggleChat,
