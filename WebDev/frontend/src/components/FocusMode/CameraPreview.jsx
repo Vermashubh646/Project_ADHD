@@ -27,7 +27,7 @@ function CameraPreview() {
   const lastReminderTypeRef = useRef(""); // 🚨 Holds last reminder type
 
 
-  // 📡 Initialize WebSocketManager once and pass onMessage callback
+  // 📡 Initialize WebSocketManager once and pass onMessage callback and also passed the WS url
   const wsManager = useRef(
     new WebSocketManager(import.meta.env.VITE_WS_URL, (status) => {
       setFocusStatus(status);
