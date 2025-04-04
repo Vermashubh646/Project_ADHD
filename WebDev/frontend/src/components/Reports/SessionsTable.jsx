@@ -15,11 +15,11 @@ const SessionsTable = ({ sessions }) => {
       <table className="reports-table">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Focus Time</th>
-            <th>Tasks Completed</th>
-            <th>Task Titles</th>
-            <th>Distractions</th>
+            <th style={{ backgroundColor: "rgb(30, 41, 57)" }}>Date</th>
+            <th style={{ backgroundColor: "rgb(30, 41, 57)" }}>Focus Time</th>
+            <th style={{ backgroundColor: "rgb(30, 41, 57)" }}>Tasks Completed</th>
+            <th style={{ backgroundColor: "rgb(30, 41, 57)" }}>Task Titles</th>
+            <th style={{ backgroundColor: "rgb(30, 41, 57)" }}>Distractions</th>
           </tr>
         </thead>
         <tbody>

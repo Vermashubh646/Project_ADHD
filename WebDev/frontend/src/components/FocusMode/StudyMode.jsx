@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PDFViewer from "./PDFViewer";
 import YouTubePlayer from "./YouTubePlayer";
+import { FaYoutube } from "react-icons/fa";
 import "./StudyMode.css";
 
 const StudyMode = () => {
@@ -45,9 +46,9 @@ const StudyMode = () => {
           {/* YouTube Mode */}
           <button
             onClick={() => setSelectedMode("youtube")}
-            className="study-mode-btn"
+            className="study-mode-btn youtube-btn"
           >
-            🎥 Study from YouTube
+            <FaYoutube size={24} className="youtube-icon" /> Study from YouTube
           </button>
 
           {/* Info Text */}

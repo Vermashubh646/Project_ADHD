@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@clerk/clerk-react"; 
+import { useAuth } from "@clerk/clerk-react";
 
 function TaskForm() {
   const { getToken } = useAuth();
@@ -41,56 +41,99 @@ function TaskForm() {
   };
 
   return (
-    <div className="max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Create New Task</h1>
+    <div className="max-w-xl mx-auto p-4 bg-white shadow-lg rounded-lg mt-6">
+      <h1 className="text-2xl font-semibold text-center text-gray-800 mb-4">Create New Task</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="title"
-          value={task.title}
-          onChange={handleChange}
-          placeholder="Task Title"
-          className="w-full p-2 border rounded"
-          required
-        />
-        <textarea
-          name="description"
-          value={task.description}
-          onChange={handleChange}
-          placeholder="Task Description"
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="date"
-          name="dueDate"
-          value={task.dueDate}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <select name="priority" value={task.priority} onChange={handleChange} className="w-full p-2 border rounded">
-          <option>Low</option>
-          <option>Medium</option>
-          <option>High</option>
-        </select>
-        <select name="category" value={task.category} onChange={handleChange} className="w-full p-2 border rounded">
-          <option>Study</option>
-          <option>Work</option>
-          <option>Assignment</option>
-          <option>Other</option>
-        </select>
-        <input
-          type="number"
-          name="estimatedTime"
-          value={task.estimatedTime}
-          onChange={handleChange}
-          placeholder="Estimated Time (minutes)"
-          className="w-full p-2 border rounded"
-          min="1"
-          required
-        />
-        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
+        <div className="form-group">
+          <label htmlFor="title" className="block text-lg font-medium text-gray-700">Task Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={task.title}
+            onChange={handleChange}
+            placeholder="Enter task title"
+            className="w-full p-2.5 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="description" className="block text-lg font-medium text-gray-700">Task Description</label>
+          <textarea
+            id="description"
+            name="description"
+            value={task.description}
+            onChange={handleChange}
+            placeholder="Enter task description"
+            className="w-full p-2.5 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="dueDate" className="block text-lg font-medium text-gray-700">Due Date</label>
+          <input
+            type="date"
+            id="dueDate"
+            name="dueDate"
+            value={task.dueDate}
+            onChange={handleChange}
+            className="w-full p-2.5 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="priority" className="block text-lg font-medium text-gray-700">Priority</label>
+          <select
+            id="priority"
+            name="priority"
+            value={task.priority}
+            onChange={handleChange}
+            className="w-full p-2.5 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="category" className="block text-lg font-medium text-gray-700">Category</label>
+          <select
+            id="category"
+            name="category"
+            value={task.category}
+            onChange={handleChange}
+            className="w-full p-2.5 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <option>Study</option>
+            <option>Work</option>
+            <option>Assignment</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="estimatedTime" className="block text-lg font-medium text-gray-700">Estimated Time (minutes)</label>
+          <input
+            type="number"
+            id="estimatedTime"
+            name="estimatedTime"
+            value={task.estimatedTime}
+            onChange={handleChange}
+            placeholder="Enter estimated time"
+            className="w-full p-2.5 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            min="1"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-2.5 mt-4 bg-green-500 text-white text-lg font-semibold rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-500"
+        >
           Save Task
         </button>
       </form>

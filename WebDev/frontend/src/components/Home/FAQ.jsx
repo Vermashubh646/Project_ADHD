@@ -31,16 +31,23 @@ const FAQ = () => {
   };
 
   return (
-    <section className="py-16 bg-gray-900 text-white">
+    <section
+      className="py-16 bg-white text-black"
+      style={{
+        backgroundImage: "url('/ghibli2.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <div className="text-center mb-8">
         <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
-        <p className="text-gray-400 mt-2">Find answers to common questions.</p>
+        <p className="mt-2">Find answers to common questions.</p>
       </div>
       <div className="max-w-3xl mx-auto space-y-4 px-4">
         {faqs.map((faq, index) => (
           <div
             key={index}
-            className="bg-gray-800 p-4 rounded-lg shadow-lg cursor-pointer"
+            className="bg-white p-4 rounded-lg shadow-lg cursor-pointer border border-gray-300"
           >
             <div
               className="flex justify-between items-center"
@@ -51,9 +58,7 @@ const FAQ = () => {
                 {openIndex === index ? "−" : "+"}
               </span>
             </div>
-            {openIndex === index && (
-              <p className="text-gray-400 mt-2">{faq.answer}</p>
-            )}
+            {openIndex === index && <p className="mt-2">{faq.answer}</p>}
           </div>
         ))}
       </div>

@@ -54,6 +54,17 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
   }
+
+  /* YouTube Button Adjustments */
+.youtube-btn {
+  display: flex; /* Ensure Flexbox layout */
+  align-items: center; /* Vertically align icon and text */
+  justify-content: center; /* Center content horizontally */
+}
+
+.youtube-btn .youtube-icon {
+  margin-right: 8px; /* Add space between the icon and the text */
+}
   
   /* Info Text */
   .study-mode-info {

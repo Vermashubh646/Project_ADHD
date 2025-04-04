@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios"; // ✅ Import Axios
-import { useAuth } from "@clerk/clerk-react"; 
+import { useAuth } from "@clerk/clerk-react";
 
 function EditTask() {
   const { taskId } = useParams();
@@ -25,7 +25,7 @@ function EditTask() {
       setLoading(false);
       return;
     }
-  
+
     const fetchTask = async () => {
       try {
         const token = await getToken(); // Get the JWT Token from Clerk
@@ -96,44 +96,67 @@ function EditTask() {
   if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
-    <div className="max-w-xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Edit Task</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          placeholder="Task Title"
-          className="w-full p-2 border rounded"
-          required
-        />
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          placeholder="Task Description"
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="date"
-          name="dueDate"
-          value={formData.dueDate}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-        <select
-          name="priority"
-          value={formData.priority}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-8">
+      <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Edit Task</h1>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="form-group">
+          <label htmlFor="title" className="block text-lg font-medium text-gray-700">Task Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter task title"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="description" className="block text-lg font-medium text-gray-700">Task Description</label>
+          <textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Enter task description"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="dueDate" className="block text-lg font-medium text-gray-700">Due Date</label>
+          <input
+            type="date"
+            id="dueDate"
+            name="dueDate"
+            value={formData.dueDate}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="priority" className="block text-lg font-medium text-gray-700">Priority</label>
+          <select
+            id="priority"
+            name="priority"
+            value={formData.priority}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select Priority</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-3 mt-4 bg-blue-500 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-500"
         >
-          <option value="">Select Priority</option>
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
-        </select>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
           Update Task
         </button>
       </form>

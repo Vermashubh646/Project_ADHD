@@ -1,8 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Footer() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/"; // Check if we're on the home page
+
   return (
-    <footer className="bg-gray-800 py-8 text-gray-300">
+    <footer
+      className="py-8 text-gray-300"
+      style={{
+        backgroundColor: isHomePage ? "rgb(175, 112, 28)" : "rgb(31, 41, 55)", // Match navbar's background color
+      }}
+    >
       <div className="container mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <h3 className="text-lg font-bold mb-3">About Us</h3>
@@ -25,7 +33,9 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className="text-center mt-6 text-sm text-gray-500">&copy; {new Date().getFullYear()} MindSync. All Rights Reserved.</div>
+      <div className="text-center mt-6 text-sm text-black">
+        &copy; {new Date().getFullYear()} MindSync. All Rights Reserved.
+      </div>
     </footer>
   );
 }

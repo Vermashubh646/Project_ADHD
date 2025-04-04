@@ -6,12 +6,14 @@
   padding: 20px;
 }
 
+/* Left section of the dashboard */
 .dashboard-left {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 
+/* Right section of the dashboard */
 .dashboard-right {
   display: flex;
   flex-direction: column;
@@ -31,13 +33,21 @@
 }
 
 /* Key Insights and Metrics */
+/* Key Insights and Metrics */
 .key-insights {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  transition: all 0.3s ease; /* Smooth transition */
 }
 
+.key-insights:hover {
+  background-color: #f0f8ff; /* Light blue background on hover */
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2); /* Increased shadow effect */
+}
+
+/* Key Insights Header */
 .key-insights h3 {
   margin: 0 0 10px;
 }
@@ -87,11 +97,15 @@
   padding: 20px;
 }
 
+/* Section Title */
 .section-title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 15px;
+  transition: color 0.3s ease, text-decoration 0.3s ease; /* Smooth transition */
 }
+
+
 
 .task-list {
   list-style: none;
@@ -141,9 +155,6 @@
   color: #555;
 }
 
-
-
-
 /* Sessions */
 .sessions-table-container {
   background-color: #ffffff; /* White background for session table */
@@ -152,23 +163,21 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.sessions-table-container h3 {
-  margin-bottom: 15px;
-  font-size: 1.5rem;
-  font-weight: 600;
+/* Sessions */
+.sessions-table-container {
+  background-color: #ffffff; /* White background for session table */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
 }
 
-.reports-table {
-  width: 100%;
-  border-collapse: collapse;
+.sessions-table-container:hover {
+  background-color: #f5f5f5; /* Light grey background on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Increased shadow effect on hover */
 }
 
-.reports-table th,
-.reports-table td {
-  padding: 12px;
-  text-align: left;
-}
-
+/* Table header */
 .reports-table th {
   background-color: #f0f0f0;
   font-weight: bold;
@@ -182,4 +191,87 @@
   text-align: center;
   font-style: italic;
   color: #888;
+}
+
+
+/* 📱 Responsive Styles for smaller screens */
+@media (max-width: 1024px) {
+  /* Change the layout to single column for tablet screens */
+  .dashboard-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Adjust sections */
+  .dashboard-left, .dashboard-right {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .greeting-container h2 {
+    font-size: 1.6rem; /* Smaller font size for mobile */
+  }
+
+  /* Adjust spacing for key insights */
+  .key-insights {
+    padding: 15px;
+  }
+
+  /* Adjust task list item layout for smaller screens */
+  .task-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .task-item span {
+    font-size: 1rem;
+  }
+
+  /* Adjust weekly performance and task quick access cards */
+  .weekly-performance,
+  .incomplete-tasks,
+  .productivity-streak {
+    margin-top: 0;
+  }
+
+  .sessions-table-container {
+    padding: 15px;
+  }
+}
+
+/* 📱 Mobile Styles (max-width: 768px) */
+@media (max-width: 768px) {
+  /* Stack items vertically */
+  .dashboard-container {
+    padding: 10px;
+  }
+
+  .dashboard-left,
+  .dashboard-right {
+    max-width: 100%;
+    min-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .greeting-container h2 {
+    font-size: 1.4rem; /* Smaller font size for mobile */
+  }
+
+  /* Adjust spacing */
+  .key-insights {
+    padding: 10px;
+  }
+
+  .sessions-table-container {
+    padding: 10px;
+  }
+
+  .task-item {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
 }

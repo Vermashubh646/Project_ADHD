@@ -34,24 +34,68 @@ const features = [
   },
 ];
 
+// Scroll Animation Variants
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } },
+};
+
 function KeyFeatures() {
   return (
-    <section className="py-20 bg-gray-900 text-white">
+    <section
+      className="py-20 text-gray-900"
+      style={{
+        backgroundImage: "url('/ghibli1.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="container mx-auto px-8">
-        <h2 className="text-4xl font-bold text-center mb-12">Key Features</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        {/* Heading Animation */}
+        <motion.h2
+          className="text-4xl font-extrabold text-center text-white mb-12"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+        >
+          Key Features
+        </motion.h2>
+
+        {/* Features Grid */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="bg-gray-800 p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-center cursor-pointer"
-              whileHover={{ scale: 1.05 }}
+              className="bg-white p-8 rounded-2xl shadow-lg text-center relative flex flex-col items-center justify-center transition-all"
+              whileHover={{
+                scale: 1.07,
+                rotate: -1,
+                boxShadow: "0px 10px 20px rgba(0, 180, 255, 0.3)",
+              }}
+              variants={cardVariants}
             >
-              <div className="text-5xl text-blue-400 mb-4">{feature.icon}</div>
-              <h3 className="text-2xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-300">{feature.description}</p>
+              {/* Animated Icon */}
+              <motion.div
+                className="text-5xl text-blue-500 mb-4 flex items-center justify-center w-16 h-16 rounded-full bg-gray-200"
+                whileHover={{ scale: 1.2, y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                {feature.icon}
+              </motion.div>
+
+              {/* Title & Description */}
+              <h3 className="text-2xl font-bold">{feature.title}</h3>
+              <p className="text-gray-800 mt-2">{feature.description}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -19,6 +19,7 @@ function Layout() {
   return (
     <TaskProvider>
       <div className="w-full min-h-screen">
+        {/* Only show navbar if not in Focus Mode */}
         {!isFocusMode && <Navbar />}
         <Routes>
           {/* Public Routes */}
