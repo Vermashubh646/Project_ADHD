@@ -38,11 +38,7 @@ function HeroSection() {
             Get Started
           </motion.button>
         </Link>
-        
-        {/* Modified position of the xyz class */}
-        <h1 className="moti-text mt-8 text-xl text-center text-white italic" style={{}}>
-          "Dream big. Start small. Act now." – Robin Sharma
-        </h1>
+      
       </motion.div>
     </section>
   );
