@@ -75,7 +75,7 @@ function CameraPreview() {
       // 🎯 Handle distraction if "Not Focused"
       if (result === "Not Focused") {
         handleDistraction(focusedTask);
-        triggerDistractionAlert();
+        handleDistractionAlert();
       }
 
       // Update focus history for progressive alerts
