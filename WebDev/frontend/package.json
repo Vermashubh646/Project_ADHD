@@ -19,6 +19,7 @@
         "@tensorflow/tfjs": "^4.22.0",
         "axios": "^1.8.2",
         "chart.js": "^4.4.8",
+        "date-fns": "^4.1.0",
         "framer-motion": "^12.6.2",
         "pdfjs-dist": "^4.8.69",
         "puppeteer": "^24.4.0",

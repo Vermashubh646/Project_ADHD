@@ -15,7 +15,7 @@ const TaskForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://mindsync-backend.up.railway.app/api/tasks", task);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/tasks`, task);
       console.log("Task added:", response.data);
       setTask({ name: "", deadline: "", priority: "Medium" }); // Reset form
     } catch (error) {

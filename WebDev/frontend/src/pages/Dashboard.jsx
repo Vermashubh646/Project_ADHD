@@ -5,10 +5,10 @@ import StreakTracker from "../components/Reports/StreakTracker";
 import KeyMetrics from "../components/Reports/KeyMetrics";
 import TaskQuickAccess from "../components/Dashboard/TaskQuickAccess";
 import SessionsTable from "../components/Reports/SessionsTable"; // Import SessionsTable component
+import GoogleCalendarTasks from "../components/Dashboard/GoogleCalendarTasks";
 import "./Dashboard.css"; // Custom CSS for dashboard layout
-import { useAuth } from "@clerk/clerk-react"; 
+import { useAuth } from "@clerk/clerk-react";
 import { useUser } from "@clerk/clerk-react";
-
 
 const Dashboard = ({ tasks }) => {
   const [greeting, setGreeting] = useState("");
@@ -25,7 +25,7 @@ const Dashboard = ({ tasks }) => {
           console.error("No token found. User may not be authenticated.");
           return;
         }
-  
+
         // ✅ Axios GET request with headers
         const res = await axios.get(
           "https://mindsync-backend.up.railway.app/api/sessions/all",
@@ -35,9 +35,9 @@ const Dashboard = ({ tasks }) => {
             },
           }
         );
-  
+
         console.log("Response Status:", res.status);
-  
+
         // ✅ Check if response is successful
         if (res.status !== 200) {
           throw new Error("Failed to fetch sessions");
@@ -49,7 +49,7 @@ const Dashboard = ({ tasks }) => {
         console.error("Error fetching sessions:", err.message);
       }
     };
-  
+
     fetchSessions(); // 🔥 Call the function inside useEffect
   }, [getToken]);
 
@@ -75,16 +75,18 @@ const Dashboard = ({ tasks }) => {
     <div className="dashboard-container">
       <div className="dashboard-left">
         <div className="greeting-container">
-          <h2>{greeting}, @{user?.username || "User"}!</h2>
+          <h2>
+            {greeting}, @{user?.username || "User"}!
+          </h2>
         </div>
 
         <div className="key-insights">
-        <h2 className="section-title">🔑 Key Insights</h2>
+          <h2 className="section-title">🔑 Key Insights</h2>
           <KeyMetrics sessions={sessions} />
         </div>
 
         <div className="adaptive-reminders">
-          <h2>Adaptive Reminder</h2>
+          <GoogleCalendarTasks />
         </div>
 
         {/* New div under Adaptive Reminder for Sessions Table */}

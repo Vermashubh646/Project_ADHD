@@ -76,7 +76,7 @@ function EditTask() {
         return;
       }
 
-      const res = await axios.put(`https://mindsync-backend.up.railway.app/api/tasks/${taskId}`, formData, {
+      const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/tasks/${taskId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`, // Include token in header
           "Content-Type": "application/json",

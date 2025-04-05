@@ -11,6 +11,10 @@ const TaskSchema = new mongoose.Schema({
   timeSpent: { type: Number, default: 0 }, // Actual time spent on the task
   distractions: { type: Number, default: 0 }, // Number of times distraction detected
   createdAt: { type: Date, default: Date.now },
+  googleTaskId: {
+    type: String,
+    default: null,
+  },
   position: { type: Number, required: true },
   userId: {
     type: String, // Clerk provides user ID as a string

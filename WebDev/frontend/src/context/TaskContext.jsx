@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { getTasks } from "../services/taskService";
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth, useUser, useSession } from "@clerk/clerk-react";
 import axios from "axios";
 
 // 🔹 Create Task Context
@@ -9,6 +9,8 @@ export const TaskContext = createContext();
 // 🔹 Task Provider Component
 export const TaskProvider = ({ children }) => {
   const { getToken } = useAuth();
+  const { user } = useUser();
+  const googleSession = useSession().session;
   // 🔹 State Management
   const [tasks, setTasks] = useState([]);
   const [queuedTasks, setQueuedTasks] = useState(() =>
@@ -584,6 +586,85 @@ useEffect(() => {
 //     );
 //   }
 // };
+// Function to fetch Google OAuth token
+// getGoogleAccessToken now calls your secure backend endpoint
+// const getGoogleAccessToken = async ({ getToken, userId }) => {
+//   try {
+//     const jwt = await getToken();
+//     if (!jwt || !userId) {
+//       alert("You must be logged in to fetch the Google access token.");
+//       return null;
+//     }
+
+//     const response = await axios.get(
+//       `https://api.clerk.com/v1/users/${userId}/oauth_access_tokens/oauth_google`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${import.meta.env.VITE_CLERK_SECRET_KEY}`, // Secret key from .env
+//         },
+//       }
+//     );
+
+//     const token = response.data.token;
+//     console.log("✅ Clerk returned Google access token:", token);
+//     return token;
+//   } catch (error) {
+//     console.error("❌ Failed to get Google token from Clerk:", error.response?.data || error.message);
+//     return null;
+//   }
+// };
+const getGoogleAccessToken = async (userId) => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/google-token`, {
+      params: { userId },
+    });
+    return response.data.accessToken;
+  } catch (err) {
+    console.error("Frontend: Failed to get token from backend:", err);
+    return null;
+  }
+};
+
+const fetchGoogleTasks = async ({ userId }) => {
+  const token = await getGoogleAccessToken(userId); // 🔥 only userId
+  if (!token) return null;
+
+  try {
+    const response = await axios.get(
+      "https://www.googleapis.com/tasks/v1/lists/@default/tasks",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.items;
+  } catch (error) {
+    console.error("Error fetching Google Tasks:", error);
+    return null;
+  }
+};
+
+const fetchGoogleCalendarEvents = async ({ userId }) => {
+  const token = await getGoogleAccessToken(userId); // 🔥 only userId
+  if (!token) return;
+
+  try {
+    const response = await axios.get(
+      "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("✅ Google Calendar Events:", response.data.items);
+    return response.data.items;
+  } catch (error) {
+    console.error("❌ Error fetching Google Calendar events:", error);
+  }
+};
 
 
   // 🔹 Context Value
@@ -661,6 +742,9 @@ useEffect(() => {
     extendTimer,
     checkTaskDeadlines,
     completeTask,
+    getGoogleAccessToken,
+    fetchGoogleTasks,
+    fetchGoogleCalendarEvents,
   };
 
   return (

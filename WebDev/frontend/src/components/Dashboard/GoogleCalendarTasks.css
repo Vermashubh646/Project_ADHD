@@ -1,0 +1,124 @@
+.calendar-section {
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.9); /* light glassmorphism */
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1f2937; /* dark slate */
+  margin-bottom: 1rem;
+}
+
+.no-events {
+  color: #555;
+  font-style: italic;
+  margin-left: 0.5rem;
+}
+
+.event-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.event-card {
+  background: #f9fafb;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  color: #1f2937; /* dark text */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.event-card:hover {
+  transform: scale(1.015);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.event-title {
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin: 0;
+  color: #111827;
+}
+
+.event-time {
+  font-size: 0.95rem;
+  color: #4b5563;
+  margin-top: 0.3rem;
+}
+
+
+.google-section {
+  background: #f9f9fc;
+  border: 1px solid #e1e3ea;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 32px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+
+.google-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1a202c;
+}
+
+.google-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.google-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  transition: box-shadow 0.2s ease;
+}
+
+.google-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.google-task-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.google-task-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.google-button {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.google-button:hover {
+  background-color: #4338ca;
+}
+
+.empty-msg {
+  font-style: italic;
+  color: #6b7280;
+}
+

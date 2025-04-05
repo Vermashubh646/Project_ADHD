@@ -3,6 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const geminiRoutes = require("./routes/geminiRoutes");
+const googleTokenRoute =  require("./routes/googleToken.js");
+const googleTasksRoutes = require("./routes/googleTasksRoutes");
 const { ClerkExpressWithAuth } = require("@clerk/clerk-sdk-node");
 const authMiddleware = require("./middleware/authMiddleware");
 const Task = require("./models/Task");
@@ -41,6 +43,8 @@ mongoose
 app.use("/api/tasks", authMiddleware, require("./routes/taskRoutes"));
 app.use("/api/sessions", authMiddleware, require("./routes/sessionRoutes"));
 app.use(geminiRoutes);
+app.use("/api/google-token", googleTokenRoute);
+app.use("/api/google-tasks", authMiddleware, googleTasksRoutes);
 
 app.get("/checkTasks", async (req, res) => {
   try {

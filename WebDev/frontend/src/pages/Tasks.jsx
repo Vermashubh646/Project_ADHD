@@ -132,7 +132,7 @@ function Tasks() {
   
     try {
       const token = await getToken();
-      const response = await fetch(`https://mindsync-backend.up.railway.app/api/tasks/${taskId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/tasks/${taskId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -149,11 +149,11 @@ function Tasks() {
       alert("Error deleting task: " + error.message);
     }
   };
-  
+  //     const response = await fetch(`https://mindsync-backend.up.railway.app/api/tasks/${taskId}/complete`
   const handleMarkComplete = async (taskId) => {
     try {
       const token = await getToken();
-      const response = await fetch(`https://mindsync-backend.up.railway.app/api/tasks/${taskId}/complete`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/tasks/${taskId}/complete`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

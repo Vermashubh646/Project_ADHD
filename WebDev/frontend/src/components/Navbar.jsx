@@ -57,7 +57,7 @@ function Navbar() {
 
           {/* Show Sign In Button when signed out */}
           <SignedOut>
-            <SignInButton>
+            <SignInButton strategy="oauth_google" mode="modal">
               <button className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600 transition duration-300">
                 Sign In
               </button>

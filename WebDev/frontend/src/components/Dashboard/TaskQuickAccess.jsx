@@ -16,7 +16,7 @@ const TaskQuickAccess = () => {
           return;
         }
 
-        const res = await fetch("https://mindsync-backend.up.railway.app/api/tasks/", {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/tasks/`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`, // ✅ Pass token in headers

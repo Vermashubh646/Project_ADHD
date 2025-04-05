@@ -9,28 +9,7 @@ const WebViewer = ({ onClose }) => {
   const validateUrl = (url) => {
     const pattern = /^(https?:\/\/)?(www\.)?([\w-]+(\.[\w-]+)+)(\/.*)?$/;
     return pattern.test(url);
-  };
-
-  // Handle Load Button
-  const handleLoadUrl = () => {
-    if (validateUrl(webUrl)) {
-      // Add 'https://' if not already present
-      let formattedUrl = webUrl.startsWith("http") ? webUrl : `https://${webUrl}`;
-  
-      // ✅ Use the Puppeteer proxy
-      const proxyUrl = `http://localhost:5000/proxy?url=${encodeURIComponent(formattedUrl)}`;
-  
-      setIsLoading(true);
-      console.log("Loading URL via Puppeteer Proxy:", proxyUrl);
-  
-      setTimeout(() => {
-        setValidUrl(proxyUrl); // Load the proxied page
-        setIsLoading(false);
-      }, 500);
-    } else {
-      alert("Invalid URL. Please enter a valid link.");
-    }
-  };
+  }
 
   // Handle Reload
   const handleReload = () => {
