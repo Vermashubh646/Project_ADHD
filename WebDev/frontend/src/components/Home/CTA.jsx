@@ -3,12 +3,7 @@ import { motion } from "framer-motion";
 
 function CallToAction() {
   return (
-    <section className="py-20 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center relative"
-    style={{
-      backgroundImage: "url('/ghibli3.png')",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-    }}>
+    <section className="py-20 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center relative">
       <h2 className="text-4xl font-bold mb-6">Ready to Improve Your Productivity?</h2>
       <p className="text-lg mb-8">Sign up now and take the first step toward achieving your goals!</p>
       <Link to="/dashboard">

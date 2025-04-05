@@ -4,16 +4,11 @@ import { motion } from "framer-motion";
 function HeroSection() {
   return (
     <section
-      className="relative h-screen flex items-center justify-center"
-      style={{
-        backgroundImage: "url('/ghibli.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat"
-      }}
+      className="relative h-screen flex items-center justify-center bg-cover bg-center"
+      style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-opacity-50"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
       {/* Content */}
       <motion.div
@@ -26,8 +21,7 @@ function HeroSection() {
           Boost Your Focus & Productivity
         </h1>
         <p className="text-lg md:text-xl text-gray-300 mb-8">
-          Smart tools to manage tasks, track progress, and stay
-          distraction-free.
+          Smart tools to manage tasks, track progress, and stay distraction-free.
         </p>
         <Link to="/dashboard">
           <motion.button
@@ -38,7 +32,6 @@ function HeroSection() {
             Get Started
           </motion.button>
         </Link>
-      
       </motion.div>
     </section>
   );

@@ -9,14 +9,14 @@ function Navbar() {
     <nav
       className="text-white p-4"
       style={{
-        backgroundColor: isHomePage ? "rgb(175, 112, 28)" : "rgb(31, 41, 55)", // Default gray color for other pages
+        backgroundColor: "rgb(31, 41, 55)", // Default gray color for other pages
       }}
     >
       <div className="max-w-5xl mx-auto flex justify-between items-center">
         {/* Logo with Name to the right */}
         <Link to="/" className="flex items-center space-x-2">
           <img
-             src={isHomePage ? "/logo.png" : "/logo2.png"}  // Replace with the actual path to your logo image
+             src={"/logo2.png"}  // Replace with the actual path to your logo image
             alt="MindSync Logo"
             className="h-10"  // Adjust the height as per your requirement
           />
